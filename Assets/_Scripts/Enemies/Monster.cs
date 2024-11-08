@@ -37,8 +37,9 @@ public class Monster : MonoBehaviour
 
     public void Die()
     {
-        if(spawner != null) 
-            spawner.monstersOnField.Remove(this);
-        Destroy(gameObject);
+        if (spawner != null)
+            spawner.KillMonster(this); // monstersOnField.Remove(this);
+        else
+            Destroy(gameObject);
     }
 }

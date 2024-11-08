@@ -6,6 +6,9 @@ using UnityEngine;
 public class MonsterSpawner : MonoBehaviour
 {
     [SerializeField]
+    private _GameController _gameController;
+
+    [SerializeField]
     private GameObject[] monstersCanSpawn;
 
     public float monstersPerSecond = 1; // How many monsters to spawn per second
@@ -33,6 +36,11 @@ public class MonsterSpawner : MonoBehaviour
     void Start()
     {
         secondsBetweenMonsters = 1.0f / monstersPerSecond;
+
+        if(_gameController == null)
+        {
+            _gameController = FindFirstObjectByType<_GameController>();
+        }
     }
 
     // Update is called once per frame
@@ -105,5 +113,15 @@ public class MonsterSpawner : MonoBehaviour
         monTemp.spawner = this;
 
         monstersOnField.Add(monTemp);
+    }
+
+    public void KillMonster(Monster i_toKill)
+    {
+        if (i_toKill != null)
+        {
+            monstersOnField.Remove(i_toKill);
+            _gameController.ModifyScore(10);
+            Destroy(i_toKill.gameObject);
+        }
     }
 }
